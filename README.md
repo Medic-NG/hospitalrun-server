@@ -1,7 +1,9 @@
-# medihos
-EMR &amp; Hospital Management System (Node backend)
+HospitalRun Server
+======
 
-This is the Node.js backend for medihos.  The intention is that this would be used in medihos production deployments. Having a Node.js backend server allows us to do the following:
+[![Help Contribute to Open Source](https://www.codetriage.com/hospitalrun/hospitalrun-server/badges/users.svg)](https://www.codetriage.com/hospitalrun/hospitalrun-server)
+
+This is the Node.js backend for HospitalRun.  The intention is that this would be used in HospitalRun production deployments. Having a Node.js backend server allows us to do the following:
 
 1. Use Google OAuth for user authentication.
 2. Provide a proxy for CouchDB.
@@ -12,15 +14,15 @@ This is the Node.js backend for medihos.  The intention is that this would be us
  * **merge-conflicts** - Checks for couchdb conflicts and resolves using a strategy of accepting the last change at a field level.
 
 ## Installation with Docker
-This is the preferred and recommended way of running `medihos-server`.
+This is the preferred and recommended way of running `hospitalrun-server`.
 
-Full deployment documentation is available [here](https://github.com/Dewdrops-NG/medihos-server/blob/master/DEPLOYMENT_GUIDE.md).
+Full deployment documentation is available [here](https://github.com/HospitalRun/hospitalrun-server/blob/master/DEPLOYMENT_GUIDE.md).
 
 ## Alternative Installation
 1. Make sure you have installed [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 2. Make sure you have installed [Node.js 6.x](https://nodejs.org/en/download/)
-3. Clone this repository with `git clone https://github.com/Dewdrops-NG/medihos-server`
-4. Run `npm install` in the newly cloned directory to install the medihos dependencies
+3. Clone this repository with `git clone https://github.com/HospitalRun/hospitalrun-server`
+4. Run `npm install` in the newly cloned directory to install the HospitalRun dependencies
 5. Install and configure [CouchDB 1.6.1](http://couchdb.apache.org/)
     1. Download and install CouchDB 1.6.1 from [here](http://couchdb.apache.org/#download). Please makes sure you use Couch 1.x and not Couch 2.x as Couch 2.x is not fully supported at this time.
     2. Start CouchDB
@@ -28,11 +30,11 @@ Full deployment documentation is available [here](https://github.com/Dewdrops-NG
         2. If you installed CouchDB via Homebrew or some other command line tool, launch the tool from the command line
         3. If you're stuck with the installation, check out the instructions published [here](http://docs.couchdb.org/en/1.6.1/install/index.html)
     3. Verify that CouchDB is running by successfully navigating to 127.0.0.1:5984/_utils. If that fails, check the [installation guide](http://docs.couchdb.org/en/1.6.1/install/index.html) for CouchDB
-    4. Setup CouchDB for medihos:
-        1. Download `https://github.com/Dewdrops-NG/medihos-frontend/blob/master/script/initcouch.sh`
+    4. Setup CouchDB for HospitalRun:
+        1. Download `https://github.com/HospitalRun/hospitalrun-frontend/blob/master/script/initcouch.sh`
         2. If you have just installed CouchDB and have no admin user, simply run `initcouch.sh` with no arguements.  A user `hradmin` will be created with password: `test`.
         2. If you already have a CouchDB admin user, please run `initcouch.sh USER PASS`.  `USER` and `PASS` are the CouchDB admin user credentials.
-6. Copy the `config-example.js` to `config.js` in the folder you cloned the medihos repository. If you already had a CouchDB admin user that you passed into the couch script (`initcouch.sh USER PASS`), then you will need to modify the `couchAdminUser` and `couchAdminPassword` values in `config.js` to reflect those credentials.  Additionally the default network name for the CouchDB server is `couchdb`.  If you are runninig CouchDB on the same server as medihos, change line 2 of `config.js` from:
+6. Copy the `config-example.js` to `config.js` in the folder you cloned the HospitalRun repository. If you already had a CouchDB admin user that you passed into the couch script (`initcouch.sh USER PASS`), then you will need to modify the `couchAdminUser` and `couchAdminPassword` values in `config.js` to reflect those credentials.  Additionally the default network name for the CouchDB server is `couchdb`.  If you are runninig CouchDB on the same server as HospitalRun, change line 2 of `config.js` from:
 ```js
 var config = {
   couchDbServer: 'couchdb',
@@ -42,9 +44,9 @@ to:
 var config = {
   couchDbServer: 'localhost',
 ```
-7. If you are on Linux distribution that uses **Upstart**, there is an upstart script in `utils/medihos.conf`.  By default this script assumes the server is installed at `/var/app/server`. This script relies on [forever](https://github.com/foreverjs/forever) which you will need to install via npm: `npm install -g forever`
+7. If you are on Linux distribution that uses **Upstart**, there is an upstart script in `utils/hospitalrun.conf`.  By default this script assumes the server is installed at `/var/app/server`. This script relies on [forever](https://github.com/foreverjs/forever) which you will need to install via npm: `npm install -g forever`
    * alternatively you can run server using npm's scripts `npm start` (this is not recommended for production usage).
-8. Search on the medihos Server uses [Elasticsearch 5.x](https://www.elastic.co/products/elasticsearch) and [Logstash 5.x](https://www.elastic.co/products/logstash). If you are installing on a debian server you can use the following steps to setup elasticsearch and java (if needed):
+8. Search on the HospitalRun Server uses [Elasticsearch 5.x](https://www.elastic.co/products/elasticsearch) and [Logstash 5.x](https://www.elastic.co/products/logstash). If you are installing on a debian server you can use the following steps to setup elasticsearch and java (if needed):
 
     ```bash
     wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
@@ -92,4 +94,4 @@ The following parameters are supported:
 
 -  **type** (required) - the type of object to dump from the database (eg inventory).  For a list of available types, run `node utils/db-to-csv.js --types`
 - **filename** (optional) - the name of the file to write to.  If not specifed, this will default to type.csv (eg inventory.csv for inventory type).
-- **dbname** (optional) - the name of the database to dump from.  If not specifed, this will default to the main database for medihos.
+- **dbname** (optional) - the name of the database to dump from.  If not specifed, this will default to the main database for HospitalRun.
